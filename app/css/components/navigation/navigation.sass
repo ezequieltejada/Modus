@@ -1,6 +1,21 @@
-body
-  nav
-    background-color: $primary;
+nav
+  background-color: $primary;
+  height: 80px;
+  overflow-x: hidden;
 
-    h1
-      margin: 0;
+  h1
+    display: inline-block;
+    height: 100%;
+    margin: 0;
+  span
+    display: inline-block;
+    position: absolute;
+    text-indent: 100%;
+
+    &.modus
+      @include sprite($-m-o-d-u-s);
+      margin: 28px auto auto 172px;
+
+    &.versus
+      @include sprite($versus);
+      margin: 36px auto auto 289px;
