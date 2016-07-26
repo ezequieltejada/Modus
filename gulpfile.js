@@ -8,6 +8,7 @@ var gulp = require('gulp');
 var $ = require('gulp-load-plugins')();
 var browserSync = require('browser-sync');
 var reload = browserSync.reload;
+var gutil = require('gulp-util');
 
 var through2 = require('through2');
 var browserify = require('browserify');
@@ -21,7 +22,7 @@ gulp.task('stylesheet', ['sprites'], function () {
     .pipe($.sass({
       outputStyle: 'nested', // libsass doesn't support expanded yet
       precision: 10,
-      includePaths: ['.'],
+      includePaths: ['./'],
       onError: console.error.bind(console, 'Sass error:')
     }))
     .on('error', function (error) {
@@ -96,12 +97,12 @@ gulp.task('jshint', function () {
 });
 
 gulp.task('html', ['javascript', 'stylesheet'], function () {
-  var assets = $.useref.assets({searchPath: ['.tmp', 'app/*.html', '.']});
+  var assets = $.useref.assets({searchPath: ['.tmp', 'app/*.html', './']});
 
   return gulp.src('app/*.html')
     .pipe(assets)
-    .pipe($.if('*.js', $.uglify()))
-    .pipe($.if('*.css', $.csso()))
+    .pipe($.if('/\.js$/', $.uglify().on('error', gutil.log)))
+    .pipe($.if('/\.css$/b', $.csso()))
     .pipe(assets.restore())
     .pipe($.useref())
     .pipe($.if('*.html', $.minifyHtml({conditionals: true, loose: true})))
@@ -182,6 +183,7 @@ gulp.task('wiredep', function () {
 
   gulp.src('app/css/*.sass')
     .pipe(wiredep({
+      directory:'./bower_components',
       ignorePath: /^(\.\.\/)+/
     }))
     .pipe(gulp.dest('app/css'));
@@ -189,12 +191,13 @@ gulp.task('wiredep', function () {
   gulp.src('app/*.html')
     .pipe(wiredep({
       // exclude: ['bootstrap-sass-official'],
+      directory:'./bower_components',
       ignorePath: /^(\.\.\/)*\.\./
     }))
     .pipe(gulp.dest('app'));
 });
 
-gulp.task('build', ['html', 'images', 'fonts', 'extras'], function () {
+gulp.task('build', ['html', 'images', 'fonts', 'extras', 'wiredep'], function () {
   return gulp.src('dist/**/*').pipe($.size({title: 'build', gzip: true}));
 });
 

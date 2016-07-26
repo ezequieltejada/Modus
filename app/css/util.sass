@@ -1,2 +1,25 @@
 $background-color: #FFF;
 $primary: #76c7c0;
+$font-color: #FFF;
+$nav-item-hover-bgc: #528b86;
+$nav-item-has-submenu-hover-bgc: #e2534b;
+$nav-item-has-submenu-hover-active-bgc: #e75e55;
+$submenu-item-anchor-bgc: #e4635c;
+
+//Mixins
+
+
+//  Clearfix use:
+//  element ::after
+//    @include clearfix;
+
+
+@mixin clearfix
+  clear: both;
+  content: ' ';
+  display: block;
+
+@mixin hide-text
+  overflow: hidden;
+  text-indent: 100%;
+  white-space: nowrap;

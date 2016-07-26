@@ -1,21 +1,123 @@
 nav
   background-color: $primary;
+  background-image: url("/images/navTexture.png");
+  background-repeat: repeat-x;
+  background-position: bottom;
+  display: flex;
+  flex-direction: row;
   height: 80px;
-  overflow-x: hidden;
+  justify-content: center;
+  width: 100%;
 
-  h1
-    display: inline-block;
-    height: 100%;
-    margin: 0;
-  span
-    display: inline-block;
-    position: absolute;
-    text-indent: 100%;
+  .container
+    justify-content: space-between;
+    max-width: 1170px;
 
-    &.modus
-      @include sprite($-m-o-d-u-s);
-      margin: 28px auto auto 172px;
+    h1
+      display: inline-block;
+      margin: 0;
 
-    &.versus
-      @include sprite($versus);
-      margin: 36px auto auto 289px;
+    span
+      @include hide-text;
+      display: inline-block;
+
+      &.modus
+        @include sprite($-m-o-d-u-s);
+        margin: 28px auto auto 9px;
+
+      &.versus
+        @include sprite($versus);
+        margin: 36px auto auto 4px;
+
+    > ul
+      color: $font-color;
+      display: inline-flex;
+      list-style: none;
+      margin: 0 0 0 200px;
+      padding: 0;
+
+      a
+        color: inherit;
+        text-decoration: none;
+
+      &> li
+        border-bottom: 3px;
+        margin: 0;
+        //padding: 11px 13px 10px;
+        position: relative;
+
+        a
+          i
+            font-size: .7em;
+            vertical-align: middle;
+
+        ul
+          display: none;
+          left: 0;
+          margin: 0;
+          padding: 0;
+          position: absolute;
+          top: 100%;
+
+        &:hover
+          background-color: $nav-item-hover-bgc;
+          border-bottom-color: $nav-item-hover-bgc;
+          border-radius: 5px;
+
+          &.has-submenu
+            background-color: $nav-item-has-submenu-hover-active-bgc;
+            border-bottom-color: $nav-item-has-submenu-hover-bgc;
+            border-bottom-style: solid;
+
+            &::after
+              background-color: transparent;
+              bottom: -12px;
+              content: '';
+              height: 100%;
+              left: 0;
+              position: absolute;
+              width: 100%;
+
+          > ul
+            display: block;
+
+        &> a
+          display: block;
+          padding: 11px 13px 10px;
+
+      .submenu
+        border-radius: 5px;
+        margin-top: 5px;
+        padding-top: 7px;
+
+        li
+          background-color: $nav-item-has-submenu-hover-bgc;
+          list-style-type: none;
+          padding: 2.5px 5px;
+
+          a
+            background-color: $submenu-item-anchor-bgc;
+            border-radius: 3px;
+            display: block;
+            padding: 10px 12px;
+            white-space: nowrap;
+
+          :hover
+            background-color: $primary;
+
+          &:first-child
+            border-radius: 5px 5px 0 0;
+            padding-top: 5px;
+
+          &:last-child
+            border-radius: 0 0 5px 5px;
+            padding-bottom: 5px;
+
+        &::before
+          border-bottom: 7px solid $nav-item-has-submenu-hover-active-bgc;
+          border-left: 7px solid transparent;
+          border-right: 7px solid transparent;
+          content: '';
+          margin: 0 0 0 12px;
+          position: absolute;
+          top: 0;
